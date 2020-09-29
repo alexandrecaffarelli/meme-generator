@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { createPortal } from "react-dom"
 
 class MemeGenerator extends Component {
     constructor() {
@@ -6,10 +7,11 @@ class MemeGenerator extends Component {
         this.state ={
             topText: "",
             bottomText: "",
-            randomImg: "http://i.imgflip.com/1bij.jpg",
+            randomImg: "https://i.imgflip.com/23ls.jpg",
             allMemeImgs : []
         }
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
     
     componentDidMount() {
@@ -28,10 +30,19 @@ class MemeGenerator extends Component {
         })
     }
 
+    handleSubmit(event) {
+        event.preventDefault()
+        const randomNumber = Math.floor(Math.random() * this.state.allMemeImgs.length)
+        const pickedImg = this.state.allMemeImgs[randomNumber].url
+        this.setState({
+            randomImg: pickedImg
+        })
+    }
+
     render() {
         return (
             <div>
-                <form className="meme-form">
+                <form className="meme-form" onSubmit={this.handleSubmit}>
                 <input 
                     type="text"
                     name="topText"
